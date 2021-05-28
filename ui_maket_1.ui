@@ -134,16 +134,6 @@
      <string>Начать поиск</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="textBrowser_output_field">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>301</y>
-      <width>291</width>
-      <height>181</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_result">
     <property name="geometry">
      <rect>
@@ -258,6 +248,16 @@
      </property>
     </widget>
    </widget>
+   <widget class="QTextEdit" name="textEdit_output_field">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>300</y>
+      <width>291</width>
+      <height>181</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -279,6 +279,7 @@
     <property name="title">
      <string>Справка</string>
     </property>
+    <addaction name="action_3"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
@@ -292,6 +293,11 @@
   <action name="action_2">
    <property name="text">
     <string>Сохранить</string>
+   </property>
+  </action>
+  <action name="action_3">
+   <property name="text">
+    <string>Справка</string>
    </property>
   </action>
  </widget>
