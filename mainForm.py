@@ -55,9 +55,6 @@ class Ui_MainWindow(object):
         font.setPointSize(10)
         self.button_play.setFont(font)
         self.button_play.setObjectName("button_play")
-        self.textEdit_output_field = QtWidgets.QTextEdit(self.centralwidget)
-        self.textEdit_output_field.setGeometry(QtCore.QRect(380, 301, 291, 181))
-        self.textEdit_output_field.setObjectName("textBrowser_output_field")
         self.label_result = QtWidgets.QLabel(self.centralwidget)
         self.label_result.setGeometry(QtCore.QRect(50, 250, 111, 31))
         self.label_result.setObjectName("label_result")
@@ -88,6 +85,9 @@ class Ui_MainWindow(object):
         self.progressBar.setGeometry(QtCore.QRect(100, 70, 421, 23))
         self.progressBar.setProperty("value", 24)
         self.progressBar.setObjectName("progressBar")
+        self.textEdit_output_field = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit_output_field.setGeometry(QtCore.QRect(380, 300, 291, 181))
+        self.textEdit_output_field.setObjectName("textEdit_output_field")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 720, 26))
@@ -104,8 +104,11 @@ class Ui_MainWindow(object):
         self.action.setObjectName("action")
         self.action_2 = QtWidgets.QAction(MainWindow)
         self.action_2.setObjectName("action_2")
+        self.action_3 = QtWidgets.QAction(MainWindow)
+        self.action_3.setObjectName("action_3")
         self.menu.addAction(self.action)
         self.menu.addAction(self.action_2)
+        self.menu_2.addAction(self.action_3)
         self.menubar.addAction(self.menu.menuAction())
         self.menubar.addAction(self.menu_2.menuAction())
 
@@ -131,6 +134,4 @@ class Ui_MainWindow(object):
         self.menu_2.setTitle(_translate("MainWindow", "Справка"))
         self.action.setText(_translate("MainWindow", "Загрузить"))
         self.action_2.setText(_translate("MainWindow", "Сохранить"))
-
-
-
+        self.action_3.setText(_translate("MainWindow", "Справка"))
