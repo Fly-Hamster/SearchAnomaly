@@ -8,6 +8,8 @@ import csv
 # import files
 import helpForm_class
 import errorForm_class
+import search_main_charact
+
 class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
@@ -108,7 +110,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         # считать в отдельный документ временной интервал и нужный столбец
 
         # вызов функции для поиска основных характеристик
-
+        search_main_charact.search_main_char()
         # Вызов НС
 
         # в конце открыть кнопку сохранить
