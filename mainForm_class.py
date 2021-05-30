@@ -18,7 +18,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.progressBar.setEnabled(False)
         # start help
         self.label_info_1.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Загрузите файл *.csv..</span></p></body></html>')
-        self.label_info_2.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Нажмите кнопку "Начать поиск".</span></p></body></html>')
+        self.label_info_2.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\"> </span></p></body></html>')
         # mute start button and button for save result
         self.button_play.setEnabled(False)
         self.saveFile.setEnabled(False)
@@ -27,6 +27,9 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.loadFile.triggered.connect(self.openDoc)
         self.saveFile.triggered.connect(self.saveResult)
         self.openHelp.triggered.connect(self.open_help)
+
+        # connect button_ply with start
+        self.button_play.clicked.connect(self.start)
 
     def openDoc(self):
         self.fileName, val = QtWidgets.QFileDialog.getOpenFileName()
@@ -39,20 +42,22 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             for i in text:
                 all_columns.append(i)
             # count the number of columns (number delimeters + 1)
-            number_columns = all_columns[0][0].count(';')+1
+            self.number_columns = all_columns[0][0].count(';')+1
 
-            if number_columns<2:
+            if self.number_columns<2:
                 f_err = open('error_text.txt', 'w', encoding='utf-8')
                 f_err.write(' Файл содержит меньше 2 столбцов. \n Должно быть минимум 2:\n -временной показатель;\n -ряд.')
                 f_err.close()
                 win = errorForm_class.ErrorForm()
                 win.setFixedSize(640, 302)
                 win.show()
-            elif number_columns>=2:
-                text = 'Количество столбцов _'+str(number_columns)+'_'
+            elif self.number_columns>=2:
+                text = 'Количество столбцов _'+str(self.number_columns)+'_'
                 # output information about number columns and user can chooese
                 self.label_number_column.setText(text)
                 self.label_number_column.setFont(QtGui.QFont("Times", 10))
+                self.label_info_1.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Введите столбец.</span></p></body></html>')
+                self.label_info_2.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Нажмите кнопку "Начать поиск".</span></p></body></html>')
                 self.lineEdit_number_column.setEnabled(True)
                 self.lineEdit_number_column.setInputMask('999')
                 self.button_play.setEnabled(True)
@@ -76,6 +81,26 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def start(self):
         print('start')
+        count = self.lineEdit_number_column.text()
+        print(type(count))
+        print(self.number_columns)
+        if int(count)<1 or int(count)> self.number_columns:
+            print('here')
+            f_err = open('error_text.txt', 'w', encoding='utf-8')
+            f_err.write(' Неверное количество столбцов.')
+            f_err.close()
+            win = errorForm_class.ErrorForm()
+            win.setFixedSize(640, 302)
+            win.show()
+            self.lineEdit_number_column.setText("")
+            self.label_info_1.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Введите столбец.</span></p></body></html>')
+            self.label_info_2.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Нажмите кнопку "Начать поиск".</span></p></body></html>')
+
+            return 0
+
+        # сделать проверку введенного числа
+        self.label_info_1.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Обработка документа может занять некоторое время.</span></p></body></html>')
+        self.label_info_2.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Пожалуйста, подождите.</span></p></body></html>')
 
         # открыть прогресс бар
 
