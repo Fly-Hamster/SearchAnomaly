@@ -103,7 +103,15 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_info_2.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Пожалуйста, подождите.</span></p></body></html>')
 
         # открыть прогресс бар
+        self.progressBar.setEnabled(True)
+
+        # считать в отдельный документ временной интервал и нужный столбец
+
+        # вызов функции для поиска основных характеристик
+
+        # Вызов НС
 
         # в конце открыть кнопку сохранить
+        self.saveFile.setEnabled(True)
 
 
