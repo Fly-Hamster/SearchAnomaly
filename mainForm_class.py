@@ -2,6 +2,7 @@
 # import librarys
 from mainForm import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QIcon
 import csv
 
 # import files
@@ -11,6 +12,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.setWindowIcon(QIcon('icon.png'))
         self.textEdit_output_field.setReadOnly(True)
         self.progressBar.setProperty("value", None)
         self.progressBar.setEnabled(False)
