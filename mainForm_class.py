@@ -111,14 +111,14 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         # считать в отдельный документ временной интервал и нужный столбец
         self.createNewFileForWork()
         # вызов функции для поиска основных характеристик
-        search_main_charact.search_main_char()
+        param = search_main_charact.max()
+
         # Вызов НС
 
         # в конце открыть кнопку сохранить
         self.saveFile.setEnabled(True)
 
     def createNewFileForWork(self):
-        print('newFile')
         fileForWork = open(self.fileName, 'r')
         text = csv.reader(fileForWork, delimiter = ";")
         all_columns = []
@@ -132,10 +132,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             dataForWork.append(pair)
 
         file = open('csvForWork.csv', 'w', newline='')
-        print('here1')
         writer = csv.writer(file, delimiter = ";")
-        print('here')
-        # запись нескольких строк
         writer.writerows(dataForWork)
 
 
