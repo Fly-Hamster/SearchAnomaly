@@ -4,6 +4,7 @@ from mainForm import Ui_MainWindow
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 import csv
+import numpy as np
 
 # import files
 import helpForm_class
@@ -44,16 +45,16 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
             for i in text:
                 all_columns.append(i)
             # count the number of columns (number delimeters + 1)
-            self.number_columns = all_columns[0][0].count(';')+1
+            self.number_columns = all_columns[0][0].count(';')
 
-            if self.number_columns<2:
+            if self.number_columns<1:
                 f_err = open('error_text.txt', 'w', encoding='utf-8')
                 f_err.write(' Файл содержит меньше 2 столбцов. \n Должно быть минимум 2:\n -временной показатель;\n -ряд.')
                 f_err.close()
                 win = errorForm_class.ErrorForm()
                 win.setFixedSize(640, 302)
                 win.show()
-            elif self.number_columns>=2:
+            elif self.number_columns>=1:
                 text = 'Количество столбцов _'+str(self.number_columns)+'_'
                 # output information about number columns and user can chooese
                 self.label_number_column.setText(text)
@@ -83,10 +84,10 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def start(self):
         print('start')
-        count = self.lineEdit_number_column.text()
-        print(type(count))
+        self.count = self.lineEdit_number_column.text()
+        print(type(self.count))
         print(self.number_columns)
-        if int(count)<1 or int(count)> self.number_columns:
+        if int(self.count)<1 or int(self.count)> self.number_columns:
             print('here')
             f_err = open('error_text.txt', 'w', encoding='utf-8')
             f_err.write(' Неверное количество столбцов.')
@@ -108,12 +109,33 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.progressBar.setEnabled(True)
 
         # считать в отдельный документ временной интервал и нужный столбец
-
+        self.createNewFileForWork()
         # вызов функции для поиска основных характеристик
         search_main_charact.search_main_char()
         # Вызов НС
 
         # в конце открыть кнопку сохранить
         self.saveFile.setEnabled(True)
+
+    def createNewFileForWork(self):
+        print('newFile')
+        fileForWork = open(self.fileName, 'r')
+        text = csv.reader(fileForWork, delimiter = ";")
+        all_columns = []
+        for i in text:
+            all_columns.append(i)
+        dataForWork = []
+        for i in range(len(all_columns)):
+            pair = []
+            pair.append(all_columns[i][0])
+            pair.append(all_columns[i][int(self.count)])
+            dataForWork.append(pair)
+
+        file = open('csvForWork.csv', 'w', newline='')
+        print('here1')
+        writer = csv.writer(file, delimiter = ";")
+        print('here')
+        # запись нескольких строк
+        writer.writerows(dataForWork)
 
 
