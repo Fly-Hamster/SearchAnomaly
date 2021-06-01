@@ -38,5 +38,70 @@ def firstType():
     print(count_anomaly)
     print('end')
 
+def count_average(start, end, size, column):
+    sum = 0
+    for i in range(start, end):
+        sum += float(column[i][1])
+    aver = sum/size
+    return aver
+
+def second():
+    print('sec')
+    column = search_main_charact.open_file()
+    average = search_main_charact.average()
+    number = search_main_charact.number_lines()
+    confidence_interval = average *0.2
+    part = round(number*0.05)
+    print(part)
+    index_start = 0
+    index_end = part
+    start = True
+    anom = 0
+    for i in column:
+        if start:
+            start = False
+            continue
+        if index_end+1 == len(column):
+            break
+        index_start += 1
+        index_end += 1
+        intermidiate_average = count_average(index_start, index_end, part, column)
+
+        if intermidiate_average - average > confidence_interval:
+            print('anomaly')
+            print(column[index_end])
+            anom += 1
+
+    print(anom)
+    print('sec end')
 
 
+def third():
+    print('th')
+    column = search_main_charact.open_file()
+    average = search_main_charact.average()
+    number = search_main_charact.number_lines()
+    confidence_interval = average *0.2
+    part = round(number*0.05)
+    print(part)
+    index_start = 0
+    index_end = part
+    start = True
+    anom = 0
+    for i in column:
+        if start:
+            start = False
+            continue
+        if index_end+1 == len(column):
+            break
+        index_start += 1
+        index_end += 1
+        intermidiate_average = count_average(index_start, index_end, part, column)
+
+        if average - intermidiate_average > confidence_interval:
+            print('anomaly')
+            print(column[index_end])
+            anom += 1
+
+    print(anom)
+    print('th end')

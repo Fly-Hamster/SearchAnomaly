@@ -10,6 +10,7 @@ import numpy as np
 import helpForm_class
 import errorForm_class
 import search_main_charact
+import search_anomaly
 
 class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
@@ -131,6 +132,16 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         text = 'Среднее значение _' + str(aver) + '_.'
         self.label_aver_val.setText(text)
         self.label_aver_val.setFont(QtGui.QFont("Times", 10))
+
+
+        search_anomaly.firstType()
+        search_anomaly.second()
+        search_anomaly.third()
+        # вызов для аномальной стабильности
+
+        # увеличение ср значения
+
+        # уменьшение ср значения
 
         # Вызов НС
 
