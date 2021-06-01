@@ -85,8 +85,8 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
     def start(self):
         print('start')
         self.count = self.lineEdit_number_column.text()
-        print(type(self.count))
-        print(self.number_columns)
+
+
         if int(self.count)<1 or int(self.count)> self.number_columns:
             print('here')
             f_err = open('error_text.txt', 'w', encoding='utf-8')
@@ -101,7 +101,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
             return 0
 
-        # сделать проверку введенного числа
+
         self.label_info_1.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Обработка документа может занять некоторое время.</span></p></body></html>')
         self.label_info_2.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Пожалуйста, подождите.</span></p></body></html>')
 
@@ -110,8 +110,27 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
         # считать в отдельный документ временной интервал и нужный столбец
         self.createNewFileForWork()
-        # вызов функции для поиска основных характеристик
-        param = search_main_charact.max()
+
+        # вызов функций для поиска основных характеристик
+        max = search_main_charact.max()
+        text = 'Максимальное значение _' + str(max) + '_.'
+        self.label_max_val.setText(text)
+        self.label_max_val.setFont(QtGui.QFont("Times", 10))
+
+        min = search_main_charact.min()
+        text = 'Минимальное значение _' + str(min) + '_.'
+        self.label_min_val.setText(text)
+        self.label_min_val.setFont(QtGui.QFont("Times", 10))
+
+        lines = search_main_charact.number_lines()
+        text = 'Всего _' + str(lines) + '_ строк.'
+        self.label_number_line.setText(text)
+        self.label_number_line.setFont(QtGui.QFont("Times", 10))
+
+        aver = search_main_charact.average()
+        text = 'Среднее значение _' + str(aver) + '_.'
+        self.label_aver_val.setText(text)
+        self.label_aver_val.setFont(QtGui.QFont("Times", 10))
 
         # Вызов НС
 
