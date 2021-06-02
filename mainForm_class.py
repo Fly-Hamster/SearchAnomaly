@@ -137,6 +137,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         search_anomaly.firstType()
         search_anomaly.second()
         search_anomaly.third()
+        search_anomaly.NN()
         # вызов для аномальной стабильности
 
         # увеличение ср значения

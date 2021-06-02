@@ -1,4 +1,7 @@
+import math
+
 import search_main_charact
+import random
 def startSearch():
     print('start search')
     count_anomaly = 0
@@ -105,3 +108,71 @@ def third():
 
     print(anom)
     print('th end')
+
+
+def func_activation(x):
+    exp_in_mx = math.exp(x)
+    res = 1/(1+exp_in_mx)
+    return res
+
+
+def train(w1, w2, column, part, Err, T, T_out):
+    alpha = 0.1 #step for learning
+    w1_re = []
+    w2_re = []
+    T_re = []
+    h = [0, 0, 0, 0] # hidden
+    for i in range(part):
+        if i==len(column)-1: break
+        for j in range(4):
+            h[j] = float(column[i][1]) * w1[j] - T[j]
+        sum_for_activaite = 0
+        for j in range(4):
+            sum_for_activaite=(h[j]*w2[j])
+        sum_for_activaite -= T_out
+        y_pr = func_activation(sum_for_activaite)
+        print(y_pr, ' ', column[i+1][1])
+        err_y = y_pr - float(column[i+1][1])
+        err_h = 0
+        for j in range(4):
+            err_h += (err_y*h[j]*(1-h[j])+w1[j])
+        print(err_h)
+
+        w1_re = w1
+        w2_re = w2
+        T_re = T
+        for j in range(4):
+            w1[j] = w1_re[j] - alpha * err_h * y_pr * (1 - y_pr) * h[j]
+            # w2[j] = w2_re[j] - alpha * err_h * y_pr * (1 - y_pr)
+            T[j] = T_re[j] - alpha * err_h * y_pr * (1 - y_pr)
+
+
+
+
+def NN():
+    print('start nn')
+    column = search_main_charact.open_file()
+    # 1 - input, output, 4 - hidden
+    w1 = [] # input-hidden
+    w2 = [] # hidden - output
+    T = []
+    T_out = 0
+    for i in range(4):
+        w1.append(round(random.uniform(0, 0.01), 3))
+        w2.append(round(random.uniform(0, 0.01), 3))
+        T.append(round(random.uniform(0, 0.01), 3))
+    print(w1, ' ', w2)
+
+    part = round(len(column) *0.2)
+    average = search_main_charact.average()
+    Err = average *0.05
+
+    train(w1, w2, column, part, Err, T, T_out)
+
+
+    print('end nn')
+
+
+
+
+
