@@ -18,8 +18,6 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.setWindowIcon(QIcon('icon.png'))
         self.textEdit_output_field.setReadOnly(True)
-        self.progressBar.setProperty("value", None)
-        self.progressBar.setEnabled(False)
         # start help
         self.label_info_1.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Загрузите файл *.csv..</span></p></body></html>')
         self.label_info_2.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\"> </span></p></body></html>')
@@ -76,6 +74,15 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
 
     def saveResult(self):
         print("save")
+        self.save_fileName, val = QtWidgets.QFileDialog.getSaveFileName()
+        text_file = open('RESULT.txt', 'r')
+        text = text_file.read()
+        text_file.close()
+        file = open(self.save_fileName, 'w')
+        file.write(text)
+        print(self.save_fileName)
+        file.close()
+
 
     def open_help(self):
         print('help')
@@ -107,7 +114,7 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_info_2.setText('<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Пожалуйста, подождите.</span></p></body></html>')
 
         # открыть прогресс бар
-        self.progressBar.setEnabled(True)
+
 
         # считать в отдельный документ временной интервал и нужный столбец
         self.createNewFileForWork()
@@ -133,15 +140,22 @@ class MainForm(QtWidgets.QMainWindow, Ui_MainWindow):
         self.label_aver_val.setText(text)
         self.label_aver_val.setFont(QtGui.QFont("Times", 10))
 
+        count = 0
 
-        search_anomaly.firstType()
-        search_anomaly.second()
-        search_anomaly.third()
-        search_anomaly.NN()
+        count += search_anomaly.firstType()
+        count += search_anomaly.second()
+        count += search_anomaly.third()
+        count += search_anomaly.anom()
         # вызов для аномальной стабильности
-
+        file = open('RESULT.txt', 'r', encoding = 'utf-8')
         # увеличение ср значения
-
+        text_result = file.read()
+        print(text_result)
+        print(count)
+        text = 'Общее количество аномалий _' + str(count) + '_.'
+        self.label_number_anomaly.setText(text)
+        self.label_number_anomaly.setFont(QtGui.QFont("Times", 10))
+        self.textEdit_output_field.setText(text_result)
         # уменьшение ср значения
 
         # Вызов НС
